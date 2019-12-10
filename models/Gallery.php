@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\Image;
 
 /**
  * This is the model class for table "gallery".
@@ -29,6 +30,9 @@ class Gallery extends \yii\db\ActiveRecord
             'name' => function ()   {
                 return rawurldecode($this->path);
             },
+            'images' => function ()   {
+                return $this->image;
+            },
         ];
     }
 
@@ -52,5 +56,10 @@ class Gallery extends \yii\db\ActiveRecord
             'id' => 'ID',
             'path' => 'Path',
         ];
+    }
+
+    public function getImage()
+    {
+        return $this->hasMany(Image::className(), ['gallery_id' => 'id']);
     }
 }

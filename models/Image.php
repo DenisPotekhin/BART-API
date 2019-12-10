@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use app\models\Gallery;
 /**
  * This is the model class for table "image".
  *
@@ -22,6 +22,24 @@ class Image extends \yii\db\ActiveRecord
         return 'image';
     }
 
+    public function fields()
+    {
+        return [
+            // название поля совпадает с именем атрибута
+            'path',
+
+            'fullpath' => function ()   {
+                return $this->gallery->path . '/' . $this->path;
+            },
+            //
+            'name' => function ()   {
+                return ucfirst(substr($this->path, 0, stripos($this->path, '.')));
+            },
+            'modified' => function ()   {
+                return $this->modified_at;
+            },
+        ];
+    }
     /**
      * {@inheritdoc}
      */
@@ -46,5 +64,10 @@ class Image extends \yii\db\ActiveRecord
             'path' => 'Path',
             'modified_at' => 'Modified At',
         ];
+    }
+
+    public function getGallery()
+    {
+        return $this->hasOne(Gallery::className(), ['id' => 'gallery_id']);
     }
 }

@@ -16,7 +16,7 @@ class GalleryController extends ActiveController
     {
         $modelClass = $this->modelClass;
 
-        $query = $modelClass::find()->all();
+        $query = $modelClass::find()->with('image')->all();
 
         return [
             'galleries' => $query,
