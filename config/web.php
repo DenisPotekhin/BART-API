@@ -51,7 +51,12 @@ $config = [
             'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'gallery'],
+                ['class' => 'yii\rest\UrlRule',
+                 'controller' => 'gallery',
+                 'extraPatterns' => [
+                        'GET /' => 'new',
+                    ],
+                 ],
             ],
         ],
     ],

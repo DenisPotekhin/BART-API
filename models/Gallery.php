@@ -25,9 +25,9 @@ class Gallery extends \yii\db\ActiveRecord
         return [
             // название поля совпадает с именем атрибута
             'path',
-            // 
+            //
             'name' => function ()   {
-                return rawurldecode($this->login);
+                return rawurldecode($this->path);
             },
         ];
     }
