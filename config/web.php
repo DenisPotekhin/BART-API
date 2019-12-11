@@ -52,16 +52,21 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 ['class' => 'yii\rest\UrlRule',
-                 'controller' => 'gallery',
+                 'controller' => ['gallery'],
                  'extraPatterns' => [
                         'GET <path>' => 'list-one',
-                     
                         'GET /' => 'list-all',
                         'POST <path>' => 'insert-file',
                         'POST /' => 'insert',
                         'DELETE <path>' => 'erase',
                     ],
                  ],
+                ['class' => 'yii\rest\UrlRule',
+                    'controller' => ['image'],
+                    'extraPatterns' => [
+                         'GET <width:([0-9])+>x<height:([0-9])+>/<fullpath>/<fullname>' => 'image-file',
+                    ],
+                ],
             ],
         ],
     ],

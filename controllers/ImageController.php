@@ -21,20 +21,11 @@ class ImageController extends ActiveController
         return $actions;
     }
 
-    public function actionFileImage($width, $height, $fullpath)
-    {
-  //      $encodePath = rawurlencode($path);
-        return [
-            'image' => $fullpath,
-        ];
-        $modelClass = $this->modelClass;
-    }
-
-    public function actionList($fullpath)
+    public function actionImageFile($width, $height, $fullpath, $fullname)
     {
         //      $encodePath = rawurlencode($path);
         return [
-            'image' => $fullpath . 'test',
+            'image' => $width . $height . $fullpath . $fullname,
         ];
         $modelClass = $this->modelClass;
     }
