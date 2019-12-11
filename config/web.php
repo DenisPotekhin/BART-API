@@ -54,7 +54,12 @@ $config = [
                 ['class' => 'yii\rest\UrlRule',
                  'controller' => 'gallery',
                  'extraPatterns' => [
-                        'GET /' => 'new',
+                        'GET <path>' => 'list-one',
+                     
+                        'GET /' => 'list-all',
+                        'POST <path>' => 'insert-file',
+                        'POST /' => 'insert',
+                        'DELETE <path>' => 'erase',
                     ],
                  ],
             ],
