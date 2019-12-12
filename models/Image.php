@@ -43,6 +43,13 @@ class Image extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    public function deleteImage($fileName)
+    {
+        $repoPath = Yii::getAlias('@webroot') . Yii::$app->params['uploadsPath'] ;
+        $fileDeletePath = $repoPath . $fileName;
+        unlink($fileDeletePath);
+    }
+
     public function rules()
     {
         return [

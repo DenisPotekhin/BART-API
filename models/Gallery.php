@@ -13,12 +13,18 @@ use app\models\Image;
  */
 class Gallery extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'gallery';
+    }
+
+    public function beforeDelete()
+    {
+        foreach ($this->image as $q) {
+            $q->deleteImage($this->path . '%2F' . $q->path);
+            $q->delete();
+        }
+        return parent::beforeDelete();
     }
 
     public function fields()
@@ -36,9 +42,6 @@ class Gallery extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -47,9 +50,6 @@ class Gallery extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [

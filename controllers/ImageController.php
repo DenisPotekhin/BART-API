@@ -6,6 +6,7 @@ namespace app\controllers;
 use app\models\Image;
 use Yii;
 use yii\rest\ActiveController;
+use tpmanc\imagick\Imagick;
 
 class ImageController extends ActiveController
 {
@@ -21,12 +22,21 @@ class ImageController extends ActiveController
         return $actions;
     }
 
-    public function actionImageFile($width, $height, $fullpath, $fullname)
+    public function actionImageFile($width, $height, $path, $name)
     {
-        //      $encodePath = rawurlencode($path);
-        return [
-            'image' => $width . $height . $fullpath . $fullname,
-        ];
-        $modelClass = $this->modelClass;
+        $fileName = fileEnCode($path , $name);
+        $pathSave = Yii::getAlias('@webroot') . Yii::$app->params['uploadsPath'];
+        $filePath = $pathSave . $fileName;
+    //    $img = Imagick::open($filePath);
+    //    $img->resize($width, $height);
+        if (file_exists($filePath)) {
+            Yii::$app->response->statusCode = 200;
+            return Yii::$app->response->sendFile($filePath);
+        } else {
+            Yii::$app->response->statusCode = 404;
+            return [
+                'HTTP status code 404' => 'Obrázok sa nenašiel',
+            ];
+        }
     }
 }
