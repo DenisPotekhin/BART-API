@@ -1,4 +1,5 @@
 <?php
+
 function fileEnCode($path, $filename) {
     return rawurlencode($path . '/') . $filename;
 }

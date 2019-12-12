@@ -169,7 +169,6 @@ class GalleryController extends ActiveController
                 //make dir ,give permissions
                 mkdir($savePath, 0777, true);
             }
-
             //save file
             $fileUploadPath = $savePath . $fileName. '.' . $extension;
             $image->save();

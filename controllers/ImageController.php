@@ -21,6 +21,7 @@ class ImageController extends ActiveController
         return $actions;
     }
 
+    // return resize format file from base file
     public function resizeFile($width, $height, $fileName)
     {
         $size = getimagesize($fileName);
@@ -32,13 +33,12 @@ class ImageController extends ActiveController
     public function actionImageFile($width, $height, $path, $name)
     {
         $modelClass = $this->modelClass;
-        $fileName = fileEnCode($path , $name);
+        $fileName = fileEnCode($path, $name);
         $pathSave = Yii::getAlias('@webroot') . Yii::$app->params['uploadsPath'];
         $filePath = $pathSave . $fileName;
-        $galleryId = Gallery::findOne(['path' => $path]);
+        $galleryId = Gallery::findOne(['path' => rawurlencode($path)]);
         $image = $modelClass::findOne(['path' => $name, 'gallery_id' => $galleryId->id]);
         if (file_exists($filePath) && $image) {
-            $fileResize = $pathSave . 'resize' . $fileName;
             Yii::$app->response->statusCode = 200;
             return Yii::$app->response
                 ->sendFile($this->resizeFile($width, $height, $filePath)->show('jpg'));
