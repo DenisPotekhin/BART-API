@@ -12,7 +12,7 @@ USAGE
 
 <ul>
 <li>git clone https://github.com/DenisPotekhin/BART-API.git</li>
-<li>composer install</li>
+<li>composer update</li>
 <li>create database and create tables from loq.sql</li>
 <li>edit the file `config/db.php` with real data</li>
 <li>see examples in 'examples' folder</li>

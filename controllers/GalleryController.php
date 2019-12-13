@@ -15,11 +15,12 @@ class GalleryController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
-        // disable all default actions
+        // NOTE: disable all default actions
         unset($actions['index'], $actions['create'], $actions['view'], $actions['update'], $actions['delete']);
         return $actions;
     }
 
+    // NOTE: GET - index gallery (name = $path) with images
     public function actionListOne($path)
     {
         $encodePath = rawurlencode($path);
@@ -39,6 +40,7 @@ class GalleryController extends ActiveController
         return $response;
     }
 
+    // NOTE: GET - index all galleries with images
     public function actionListAll()
     {
         $modelClass = $this->modelClass;
@@ -57,6 +59,7 @@ class GalleryController extends ActiveController
         return $response;
     }
 
+    // NOTE: POST add new gallery (name = 'name')
     public function actionInsert()
     {
         $requestParam = Yii::$app->getRequest()->getBodyParam('name');
@@ -86,6 +89,7 @@ class GalleryController extends ActiveController
         return $response;
     }
 
+    // NOTE: DELETE gallery (name = $path) with images in gallery
     public function actionErase($path)
     {
         $encodePath = rawurlencode($path);
@@ -106,6 +110,7 @@ class GalleryController extends ActiveController
         return $response;
     }
 
+    // NOTE: DELETE image (name = $name) in gallery (name = $path)
     public function actionEraseFile($path, $name)
     {
         $encodePath = rawurlencode($path);
@@ -135,6 +140,7 @@ class GalleryController extends ActiveController
         return $response;
     }
 
+    // NOTE: POST add image ('image' = file) in gallery
     public function actionInsertFile($path)
     {
         $encodePath = rawurlencode($path);
@@ -151,25 +157,17 @@ class GalleryController extends ActiveController
         if ($uploadedFile) {
             $image = new Image();
             $image->gallery_id = $gallery->id;
-            //get the uploaded file name
             $fileName = $uploadedFile->name;
             $image->path = $fileName;
-            //pathinfo() returns more info about the $uploadFile
             $pathInfo = pathinfo($uploadedFile);
-            //create a new filename to avoid file collission
             $fileName = $path . '%2F' . $pathInfo['filename'];
-            //get extension
             $modifiedAt = date('Y-m-d H:i:s');
             $image->modified_at = $modifiedAt;
             $extension  = $uploadedFile->getExtension();
-            //directory to save the image
             $savePath = Yii::getAlias('@webroot') . Yii::$app->params['uploadsPath'] ;
-            //check if dir already exists
             if (!file_exists($savePath)) {
-                //make dir ,give permissions
                 mkdir($savePath, 0777, true);
             }
-            //save file
             $fileUploadPath = $savePath . $fileName. '.' . $extension;
             $image->save();
             $uploadedFile->saveAs($fileUploadPath);

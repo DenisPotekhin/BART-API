@@ -16,12 +16,12 @@ class ImageController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
-        // disable all default actions
+        // NOTE: disable all default actions
         unset($actions['index'], $actions['create'], $actions['view'], $actions['update'], $actions['delete']);
         return $actions;
     }
 
-    // return resize format file from base file
+    // NOTE: return resize format file from base file
     public function getResizeFile($width, $height, $fileName)
     {
         $size = getimagesize($fileName);
@@ -30,6 +30,7 @@ class ImageController extends ActiveController
         return Image::resize($fileName, $imageWidth, $imageHeight);
     }
 
+    // NOTE: GET image (name = $name) with width and height from gallery (name = $path)
     public function actionImageFile($width, $height, $path, $name)
     {
         $modelClass = $this->modelClass;
