@@ -113,16 +113,23 @@ class GalleryController extends ActiveController
         $gallery = $modelClass::findOne(['path' => $encodePath]);
         if ($gallery) {
             $image = Image::findOne(['path' => $name]);
-            $image->deleteImage($encodePath . '%2F' . $name);
-            $image->delete();
-            Yii::$app->response->statusCode = 200;
-            $response = [
-                'HTTP status code 200' => 'Obrázok bol úspešne vymazan',
-            ];
+            if ($image) {
+                $image->deleteImage($encodePath . '%2F' . $name);
+                $image->delete();
+                Yii::$app->response->statusCode = 200;
+                $response = [
+                    'HTTP status code 200' => 'Obrázok bol úspešne vymazan',
+                ];
+            } else {
+                Yii::$app->response->statusCode = 404;
+                $response = [
+                    'HTTP status code 404' => 'Zvolená obrázok neexistuje',
+                ];
+            }
         } else {
             Yii::$app->response->statusCode = 404;
             $response = [
-                'HTTP status code 404' => 'Zvolená galéria/obrázok neexistuje',
+                'HTTP status code 404' => 'Zvolená galéria neexistuje',
             ];
         }
         return $response;

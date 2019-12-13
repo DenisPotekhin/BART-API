@@ -15,6 +15,7 @@ USAGE
 <li>composer install</li>
 <li>create database and create tables from loq.sql</li>
 <li>edit the file `config/db.php` with real data</li>
+<li>see examples in 'examples' folder</li>
 <li>send requests</li>
 </ul>
 
