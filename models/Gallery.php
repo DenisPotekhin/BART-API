@@ -3,15 +3,9 @@
 namespace app\models;
 
 use Yii;
-use app\models\Image;
+use yii\db\ActiveRecord;
 
-/**
- * This is the model class for table "gallery".
- *
- * @property int $id
- * @property string $path
- */
-class Gallery extends \yii\db\ActiveRecord
+class Gallery extends ActiveRecord
 {
     public static function tableName()
     {
@@ -30,9 +24,7 @@ class Gallery extends \yii\db\ActiveRecord
     public function fields()
     {
         return [
-            // название поля совпадает с именем атрибута
             'path',
-            //
             'name' => function ()   {
                 return rawurldecode($this->path);
             },
@@ -47,14 +39,6 @@ class Gallery extends \yii\db\ActiveRecord
         return [
             [['path'], 'required'],
             [['path'], 'string', 'max' => 255],
-        ];
-    }
-
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'path' => 'Path',
         ];
     }
 

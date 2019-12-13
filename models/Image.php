@@ -3,20 +3,10 @@
 namespace app\models;
 
 use Yii;
-use app\models\Gallery;
-/**
- * This is the model class for table "image".
- *
- * @property int $id
- * @property int $gallery_id
- * @property string $path
- * @property string $modified_at
- */
-class Image extends \yii\db\ActiveRecord
+use yii\db\ActiveRecord;
+
+class Image extends ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'image';
@@ -25,13 +15,10 @@ class Image extends \yii\db\ActiveRecord
     public function fields()
     {
         return [
-            // название поля совпадает с именем атрибута
             'path',
-
             'fullpath' => function ()   {
                 return $this->gallery->path . '/' . $this->path;
             },
-            //
             'name' => function ()   {
                 return ucfirst(substr($this->path, 0, stripos($this->path, '.')));
             },
@@ -40,9 +27,7 @@ class Image extends \yii\db\ActiveRecord
             },
         ];
     }
-    /**
-     * {@inheritdoc}
-     */
+
     public function deleteImage($fileName)
     {
         $repoPath = Yii::getAlias('@webroot') . Yii::$app->params['uploadsPath'] ;
@@ -57,19 +42,6 @@ class Image extends \yii\db\ActiveRecord
             [['gallery_id'], 'integer'],
             [['modified_at'], 'safe'],
             [['path'], 'string', 'max' => 255],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'gallery_id' => 'Gallery ID',
-            'path' => 'Path',
-            'modified_at' => 'Modified At',
         ];
     }
 

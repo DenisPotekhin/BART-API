@@ -24,7 +24,7 @@ API supports the following request types
 
 <ul>
 <li>GET /galleries: index all galleries with images;</li>
-<li>POST /galleries/{path}: create new gallery;</li>
+<li>POST /galleries ('name' = gallery name): create new gallery;</li>
 <li>GET /galleries/{path}: index gallery with images in gallery;</li>
 <li>POST /galleries/{path}  (key = 'image', value = file): upload image in gallery;</li>
 <li>DELETE /galleries/{path}: delete gallery with name = 'path';</li>

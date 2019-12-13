@@ -22,7 +22,7 @@ class ImageController extends ActiveController
     }
 
     // return resize format file from base file
-    public function resizeFile($width, $height, $fileName)
+    public function getResizeFile($width, $height, $fileName)
     {
         $size = getimagesize($fileName);
         $imageWidth = ($width == 0) ? $size[0] : $width;
@@ -41,7 +41,7 @@ class ImageController extends ActiveController
         if (file_exists($filePath) && $image) {
             Yii::$app->response->statusCode = 200;
             return Yii::$app->response
-                ->sendFile($this->resizeFile($width, $height, $filePath)->show('jpg'));
+                ->sendFile($this->getResizeFile($width, $height, $filePath)->show('jpg'));
         } else {
             Yii::$app->response->statusCode = 404;
             return [

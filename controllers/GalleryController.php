@@ -7,8 +7,6 @@ use app\models\Image;
 use Yii;
 use yii\rest\ActiveController;
 use yii\web\UploadedFile;
-use yii\helpers\Url;
-use tpmanc\imagick;
 
 class GalleryController extends ActiveController
 {
@@ -17,10 +15,8 @@ class GalleryController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
-
         // disable all default actions
         unset($actions['index'], $actions['create'], $actions['view'], $actions['update'], $actions['delete']);
-
         return $actions;
     }
 
@@ -61,9 +57,6 @@ class GalleryController extends ActiveController
         return $response;
     }
 
-    /**
-     * @return array
-     */
     public function actionInsert()
     {
         $requestParam = Yii::$app->getRequest()->getBodyParam('name');
@@ -159,7 +152,7 @@ class GalleryController extends ActiveController
             //create a new filename to avoid file collission
             $fileName = $path . '%2F' . $pathInfo['filename'];
             //get extension
-            $modifiedAt = date('YmdHis');
+            $modifiedAt = date('Y-m-d H:i:s');
             $image->modified_at = $modifiedAt;
             $extension  = $uploadedFile->getExtension();
             //directory to save the image
@@ -173,11 +166,16 @@ class GalleryController extends ActiveController
             $fileUploadPath = $savePath . $fileName. '.' . $extension;
             $image->save();
             $uploadedFile->saveAs($fileUploadPath);
-        }
-        Yii::$app->response->statusCode = 200;
-        $response = array(
-            'profile' =>'Upload success',
+            Yii::$app->response->statusCode = 201;
+            $response = array(
+                'uploaded' => $image,
             );
+        } else {
+            Yii::$app->response->statusCode = 400;
+            $response = array(
+                'HTTP status code 404' =>'Chybný request - nenašiel sa súbor pre upload',
+            );
+        }
         return $response;
     }
 }
