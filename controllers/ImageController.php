@@ -35,8 +35,8 @@ class ImageController extends ActiveController
     {
         $modelClass = $this->modelClass;
         $fileName = fileEnCode($path, $name);
-        $pathSave = Yii::getAlias('@webroot') . Yii::$app->params['uploadsPath'];
-        $filePath = $pathSave . $fileName;
+        // NOTE: I use method (getPlaceToImage) for definition placement for looking for image
+        $filePath = getPlaceToImage($fileName);
         $galleryId = Gallery::findOne(['path' => rawurlencode($path)]);
         $image = $modelClass::findOne(['path' => $name, 'gallery_id' => $galleryId->id]);
         if (file_exists($filePath) && $image) {

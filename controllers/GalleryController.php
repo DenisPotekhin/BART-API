@@ -158,7 +158,7 @@ class GalleryController extends ActiveController
             $fileName = $uploadedFile->name;
             // NOTE: I use encode file according template fileName = rawurlencode(fullpath)
             // for example fullpath = 'Hockey/hockey7.jpg' => fileName = 'Hokkey%2Fhockey7.jpg'
-            $fileEnCodeName = $encodePath . '%2F' . $fileName;
+            $fileEnCodeName = fileEnCode($encodePath, $fileName);
             // NOTE: I use method (getPlaceToUploadImage) for choice upload placement, I realized my method,
             // but you can reinit it
             if ($uploadedFile->saveAs(getPlaceToUploadImage($fileEnCodeName))) {
