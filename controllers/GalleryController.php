@@ -140,7 +140,7 @@ class GalleryController extends ActiveController
         return $response;
     }
 
-    // NOTE: POST add image ('image' = file) in gallery
+    // NOTE: POST add image ('image' = file) in gallery (name = $path)
     public function actionInsertFile($path)
     {
         $encodePath = rawurlencode($path);
@@ -155,26 +155,28 @@ class GalleryController extends ActiveController
         }
         $uploadedFile = UploadedFile::getInstanceByName('image');
         if ($uploadedFile) {
-            $image = new Image();
-            $image->gallery_id = $gallery->id;
             $fileName = $uploadedFile->name;
-            $image->path = $fileName;
-            $pathInfo = pathinfo($uploadedFile);
-            $fileName = $path . '%2F' . $pathInfo['filename'];
-            $modifiedAt = date('Y-m-d H:i:s');
-            $image->modified_at = $modifiedAt;
-            $extension  = $uploadedFile->getExtension();
-            $savePath = Yii::getAlias('@webroot') . Yii::$app->params['uploadsPath'] ;
-            if (!file_exists($savePath)) {
-                mkdir($savePath, 0777, true);
+            // NOTE: I use encode file according template fileName = rawurlencode(fullpath)
+            // for example fullpath = 'Hockey/hockey7.jpg' => fileName = 'Hokkey%2Fhockey7.jpg'
+            $fileEnCodeName = $encodePath . '%2F' . $fileName;
+            // NOTE: I use method (getPlaceToUploadImage) for choice upload placement, I realized my method,
+            // but you can reinit it
+            if ($uploadedFile->saveAs(getPlaceToUploadImage($fileEnCodeName))) {
+                 $image = new Image();
+                 $image->gallery_id = $gallery->id;
+                 $image->path = $fileName;
+                 $image->modified_at = time();
+                 $image->save();
+                 Yii::$app->response->statusCode = 201;
+                 $response = array(
+                     'uploaded' => $image,
+                 );
+            } else {
+                Yii::$app->response->statusCode = 500;
+                $response = [
+                    'HTTP status code 500' => 'Nedefinovaná chyba',
+                ];
             }
-            $fileUploadPath = $savePath . $fileName. '.' . $extension;
-            $image->save();
-            $uploadedFile->saveAs($fileUploadPath);
-            Yii::$app->response->statusCode = 201;
-            $response = array(
-                'uploaded' => $image,
-            );
         } else {
             Yii::$app->response->statusCode = 400;
             $response = array(

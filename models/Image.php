@@ -23,7 +23,7 @@ class Image extends ActiveRecord
                 return ucfirst(substr($this->path, 0, stripos($this->path, '.')));
             },
             'modified' => function ()   {
-                return $this->modified_at;
+                return date('c', $this->modified_at);
             },
         ];
     }
