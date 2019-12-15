@@ -16,13 +16,13 @@ class Image extends ActiveRecord
     {
         return [
             'path',
-            'fullpath' => function ()   {
+            'fullpath' => function () {
                 return $this->gallery->path . '/' . $this->path;
             },
-            'name' => function ()   {
+            'name' => function () {
                 return ucfirst(substr($this->path, 0, stripos($this->path, '.')));
             },
-            'modified' => function ()   {
+            'modified' => function () {
                 return date('c', $this->modified_at);
             },
         ];
@@ -30,9 +30,7 @@ class Image extends ActiveRecord
 
     public function deleteImage($fileName)
     {
-        $repoPath = Yii::getAlias('@webroot') . Yii::$app->params['uploadsPath'] ;
-        $fileDeletePath = $repoPath . $fileName;
-        unlink($fileDeletePath);
+        unlink(getPlaceToImage($fileName));
     }
 
     public function rules()

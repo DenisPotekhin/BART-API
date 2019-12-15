@@ -13,7 +13,7 @@ function getGalleryName($fullpath)
 // NOTE: I use method (getPlaceToImage) for definition placement for looking for image
 function getPlaceToUploadImage($fileName)
 {
-    $savePath = Yii::getAlias('@webroot') . Yii::$app->params['uploadsPath'] ;
+    $savePath = Yii::getAlias('@webroot') . Yii::$app->params['uploadsPath'];
     if (!file_exists($savePath)) {
         mkdir($savePath, 0777, true);
     }
