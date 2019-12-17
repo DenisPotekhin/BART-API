@@ -168,9 +168,9 @@ class GalleryController extends ActiveController
                  $image->modified_at = time();
                  $image->save();
                  Yii::$app->response->statusCode = 201;
-                 $response = array(
+                 $response = [
                      'uploaded' => $image,
-                 );
+                 ];
             } else {
                 Yii::$app->response->statusCode = 500;
                 $response = [
@@ -179,9 +179,9 @@ class GalleryController extends ActiveController
             }
         } else {
             Yii::$app->response->statusCode = 400;
-            $response = array(
+            $response = [
                 'HTTP status code 404' =>'Chybný request - nenašiel sa súbor pre upload',
-            );
+            ];
         }
         return $response;
     }
