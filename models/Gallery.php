@@ -20,7 +20,7 @@ class Gallery extends ActiveRecord
         return parent::beforeDelete();
     }
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'path',
@@ -33,7 +33,7 @@ class Gallery extends ActiveRecord
         ];
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['path'], 'required'],

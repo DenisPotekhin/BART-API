@@ -1,7 +1,10 @@
 <?php
+declare(strict_types = 1);
 
 namespace app\models;
 
+use phpDocumentor\Reflection\Types\Array_;
+use phpDocumentor\Reflection\Types\Boolean;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -12,7 +15,7 @@ class Image extends ActiveRecord
         return 'image';
     }
 
-    public function fields()
+    public function fields(): array
     {
         return [
             'path',
@@ -28,12 +31,12 @@ class Image extends ActiveRecord
         ];
     }
 
-    public function deleteImage($fileName)
+    public function deleteImage(string $fileName): boolean
     {
         unlink(getPlaceToImage($fileName));
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             [['gallery_id', 'path', 'modified_at'], 'required'],

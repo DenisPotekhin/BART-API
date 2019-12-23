@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 
 namespace app\controllers;
 
@@ -21,7 +21,7 @@ class GalleryController extends ActiveController
     }
 
     // NOTE: GET - index gallery (name = $path) with images
-    public function actionListOne($path)
+    public function actionListOne(string $path): array
     {
         $encodePath = rawurlencode($path);
         $modelClass = $this->modelClass;
@@ -41,7 +41,7 @@ class GalleryController extends ActiveController
     }
 
     // NOTE: GET - index all galleries with images
-    public function actionListAll()
+    public function actionListAll(): array
     {
         $modelClass = $this->modelClass;
         $query = $modelClass::find()->with('image')->all();
@@ -60,7 +60,7 @@ class GalleryController extends ActiveController
     }
 
     // NOTE: POST add new gallery (name = 'name')
-    public function actionInsert()
+    public function actionInsert(): array
     {
         $requestParam = Yii::$app->getRequest()->getBodyParam('name');
         if (!$requestParam) {
@@ -90,7 +90,7 @@ class GalleryController extends ActiveController
     }
 
     // NOTE: DELETE gallery (name = $path) with images in gallery
-    public function actionErase($path)
+    public function actionErase(string $path): array
     {
         $encodePath = rawurlencode($path);
         $modelClass = $this->modelClass;
@@ -111,7 +111,7 @@ class GalleryController extends ActiveController
     }
 
     // NOTE: DELETE image (name = $name) in gallery (name = $path)
-    public function actionEraseFile($path, $name)
+    public function actionEraseFile(string $path, string $name): array
     {
         $encodePath = rawurlencode($path);
         $modelClass = $this->modelClass;
@@ -141,7 +141,7 @@ class GalleryController extends ActiveController
     }
 
     // NOTE: POST add image ('image' = file) in gallery (name = $path)
-    public function actionInsertFile($path)
+    public function actionInsertFile(string $path): array
     {
         $encodePath = rawurlencode($path);
         $modelClass = $this->modelClass;

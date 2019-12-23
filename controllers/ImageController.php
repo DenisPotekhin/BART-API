@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 
 namespace app\controllers;
 
@@ -22,7 +22,7 @@ class ImageController extends ActiveController
     }
 
     // NOTE: return resize format file from base file
-    public function getResizeFile($width, $height, $fileName)
+    public function getResizeFile(int $width, int $height, string $fileName)
     {
         $size = getimagesize($fileName);
         $imageWidth = ($width == 0) ? $size[0] : $width;
@@ -31,7 +31,7 @@ class ImageController extends ActiveController
     }
 
     // NOTE: GET image (name = $name) with width and height from gallery (name = $path)
-    public function actionImageFile($width, $height, $path, $name)
+    public function actionImageFile(int $width, int $height, string $path, string $name)
     {
         $modelClass = $this->modelClass;
         $fileName = fileEnCode($path, $name);
