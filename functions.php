@@ -27,3 +27,13 @@ function getPlaceToImage(string $fileName): string
     $pathSave = Yii::getAlias('@webroot') . Yii::$app->params['uploadsPath'];
     return $pathSave . $fileName;
 }
+
+function getApiResponse(int $code, string $status, string $message, array $data = []): array
+{
+    Yii::$app->response->statusCode = $code;
+    return [
+        'status' => $status,
+        'message'=> $message,
+        'data' => $data,
+    ];
+}

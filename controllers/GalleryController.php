@@ -5,10 +5,9 @@ namespace app\controllers;
 
 use app\models\Image;
 use Yii;
-use yii\rest\ActiveController;
 use yii\web\UploadedFile;
 
-class GalleryController extends ActiveController
+class GalleryController extends BaseController
 {
     public $modelClass = 'app\models\Gallery';
 
@@ -185,4 +184,13 @@ class GalleryController extends ActiveController
         }
         return $response;
     }
+
+    public function actionError()
+    {
+        Yii::$app->response->statusCode = 404;
+        return [
+            'HTTP status code 404' => 'URL not found',
+        ];
+    }
+
 }

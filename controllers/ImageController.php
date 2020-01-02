@@ -5,11 +5,10 @@ namespace app\controllers;
 
 use app\models\Gallery;
 use Yii;
-use yii\rest\ActiveController;
 use yii\imagine\Image;
 
 
-class ImageController extends ActiveController
+class ImageController extends BaseController
 {
     public $modelClass = 'app\models\Image';
 
